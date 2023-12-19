@@ -1,3 +1,5 @@
+**Create a custom docker image for nginx and deploy it using docker-compose, where the volume mount should be at /var/opt/nginx location. Push the created custom docker image to your docker hub.**
+
 Clone the repo
 ![image](https://github.com/NishaSujith/Dockerday12/assets/114727720/a3974263-f6b6-4511-b977-aee15260af8d)
 Create required files
