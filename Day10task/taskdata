@@ -1,0 +1,47 @@
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# apt-get update 
+Hit:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Hit:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Fetched 229 kB in 1s (324 kB/s)                        
+Reading package lists... Done
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# apt-get install docker.io
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+docker.io is already the newest version (24.0.5-0ubuntu1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 37 not upgraded.
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker --version
+Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker pull caddy
+Using default tag: latest
+latest: Pulling from library/caddy
+c926b61bad3b: Pull complete 
+08886dfc0722: Pull complete 
+6fd2155878b9: Pull complete 
+b7343593237d: Pull complete 
+Digest: sha256:2f148ddb6662b4245ef4ced637e928eaf67a8a1941572d69627652253e779366
+Status: Downloaded newer image for caddy:latest
+docker.io/library/caddy:latest
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker run -itd --name cadcont caddy
+1ac0f038a4364a07071c57b6d71a53ad3e48ec2dbe7cc575c3586d07cb990a4f
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                                   NAMES
+1ac0f038a436   caddy              "caddy run --config …"   5 seconds ago   Up 3 seconds   80/tcp, 443/tcp, 2019/tcp, 443/udp      cadcont
+a5bcf6cb73f1   alpine             "/bin/sh"                13 hours ago    Up 13 hours                                            alpcont
+3ca7a961d080   nisha92/nginx:v1   "/docker-entrypoint.…"   23 hours ago    Up 23 hours    0.0.0.0:8080->80/tcp, :::8080->80/tcp   nginxcontainer
+612be0b20fa0   mysql:5.7          "docker-entrypoint.s…"   2 days ago      Up 24 hours    3306/tcp, 33060/tcp                     ubuntu_db_1
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker run -itd --name cadcont -p"8081:80" caddy
+docker: Error response from daemon: Conflict. The container name "/cadcont" is already in use by container "1ac0f038a4364a07071c57b6d71a53ad3e48ec2dbe7cc575c3586d07cb990a4f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker run -itd --name cadcont1 -p"8082:80" caddy
+b1a856e5eb3d2687587fda113a880d33942bb6b139c9aca42b1bd86c2b8c3211
+root@ip-172-31-14-154:/home/ubuntu/Dockertask/Day10task# docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                                                               NAMES
+b1a856e5eb3d   caddy              "caddy run --config …"   16 seconds ago   Up 15 seconds   443/tcp, 2019/tcp, 443/udp, 0.0.0.0:8082->80/tcp, :::8082->80/tcp   cadcont1
+1ac0f038a436   caddy              "caddy run --config …"   3 minutes ago    Up 3 minutes    80/tcp, 443/tcp, 2019/tcp, 443/udp                                  cadcont
+a5bcf6cb73f1   alpine             "/bin/sh"                13 hours ago     Up 13 hours                                                                         alpcont
+3ca7a961d080   nisha92/nginx:v1   "/docker-entrypoint.…"   23 hours ago     Up 23 hours     0.0.0.0:8080->80/tcp, :::8080->80/tcp                               nginxcontainer
+612be0b20fa0   mysql:5.7          "docker-entrypoint.s…"   2 days ago       Up 24 hours     3306/tcp, 33060/tcp                                                 ubuntu_db_1
+
+
